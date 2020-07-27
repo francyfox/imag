@@ -21,7 +21,7 @@
                 <a href="{{ path('add_product') }}">ADD</a>
                 <a href="{{ path('add_category') }}" class="but">NEW CATEGORY</a>
             </div>
-            <form action="/">
+            <form method="get" action="/main">
                 <table>
                     <tbody class="elem">
                         <tr>
@@ -31,6 +31,7 @@
                             <td>Кол-во</td>
                             <td>Цена</td>
                         </tr>
+                        <input type="hidden" name="id" value="">
                         {% for product in items_list %}
                             <tr>
                                 <td>{{ product.id }}</td>
@@ -38,6 +39,8 @@
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.num }}</td>
                                 <td>{{ product.price }}</td>
+
+                                <td><input type="submit" itemid="{{ product.id }}" value="Delete" /></td>
                             </tr>
                         {% endfor %}
                     </tbody>
