@@ -5,7 +5,47 @@
   font-display: swap;
   src: local('Rowdies Light'), local('Rowdies-Light'), url(https://fonts.gstatic.com/s/rowdies/v1/ptRMTieMYPNBAK219hth5O4.ttf) format('truetype');
 }
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-o-keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 body {
+  -webkit-animation: fade-in 1s linear;
+  /* Safari 4+ */
+  -moz-animation: fade-in 1s linear;
+  /* Fx 5+ */
+  -o-animation: fade-in 1s linear;
+  /* Opera 12+ */
+  animation: fade-in 1s linear;
+  /* IE 10+, Fx 29+ */
   margin: 0;
   padding: 40px 0 0 0;
   background: #878787;
@@ -15,11 +55,48 @@ body {
 body a {
   color: #1299DA;
 }
+body a:hover {
+  filter: invert(1);
+}
+input[type="submit"] {
+  color: #FF8400;
+  font-family: 'Rowdies', cursive;
+  background: transparent;
+  border: 1px solid #FF8400;
+  border-radius: 0;
+}
+input[type="submit"]:hover {
+  color: #56DB3A;
+  border: 1px solid #56DB3A;
+}
+input[type="text"],
+select,
+input[type="number"] {
+  margin: 4px;
+  padding: 5px;
+  color: #FF8400;
+  font-family: 'Rowdies', cursive;
+  background: transparent;
+  border: 1px solid #FF8400;
+  border-radius: 0;
+}
+#delete {
+  color: #d04343;
+  border: 1px solid #d04343;
+}
+#delete:hover {
+  color: #56DB3A;
+  border: 1px solid #56DB3A;
+}
 .wrap {
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 1200px;
+}
+.wrap .both {
+  display: flex;
 }
 .wrap .left {
   padding: 20px;
@@ -69,5 +146,10 @@ table .elem {
   display: block;
   background: #222;
   box-shadow: 3px 3px 1px rgba(34, 34, 34, 0.76);
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
 }
 /*# sourceMappingURL=main.css.map */

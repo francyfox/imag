@@ -1,14 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300&display=swap');
 
+@-webkit-keyframes fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+@-moz-keyframes    fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+@-o-keyframes      fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+@keyframes         fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
+
 body{
+  -webkit-animation: fade-in 1s linear; /* Safari 4+ */
+  -moz-animation: fade-in 1s linear; /* Fx 5+ */
+  -o-animation: fade-in 1s linear; /* Opera 12+ */
+  animation: fade-in 1s linear; /* IE 10+, Fx 29+ */
   margin: 0;
   padding: 40px 0 0 0;
   background: #878787;
   color: #fff;
   font-family: 'Rowdies', cursive;
   a{
+    &:hover{
+      filter: invert(1);
+    }
     color: #1299DA;
   }
+}
+
+input[type="submit"]{
+  &:hover{
+    color: #56DB3A;
+    border: 1px solid #56DB3A;
+  }
+  color: #FF8400;
+  font-family: 'Rowdies', cursive;
+  background: transparent;
+  border: 1px solid #FF8400;
+  border-radius: 0;
+}
+
+input[type="text"], select, input[type="number"]{
+  margin: 4px;
+  padding: 5px;
+  color: #FF8400;
+  font-family: 'Rowdies', cursive;
+  background: transparent;
+  border: 1px solid #FF8400;
+  border-radius: 0;
+}
+#delete{
+  &:hover{
+    color: #56DB3A;
+    border: 1px solid #56DB3A;
+  }
+  color: #d04343;
+  border: 1px solid #d04343;
 }
 
 .wrap{
@@ -79,4 +121,10 @@ table{
   display: block;
   background: #222;
   box-shadow: 3px 3px 1px rgba(34, 34, 34, 0.76);
+}
+
+.col{
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
 }

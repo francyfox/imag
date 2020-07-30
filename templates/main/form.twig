@@ -20,6 +20,7 @@
             <div class="links">
                 <a href="{{ path('add_product') }}">ADD</a>
                 <a href="{{ path('add_category') }}" class="but">NEW CATEGORY</a>
+                <a href="/csv">IMPORT CSV</a>
             </div>
             <form method="get" action="/main">
                 <table>
@@ -40,7 +41,8 @@
                                 <td>{{ product.num }}</td>
                                 <td>{{ product.price }}</td>
 
-                                <td><input type="submit" itemid="{{ product.id }}" value="Delete" /></td>
+                                <td><input type="submit" id="add" itemid="{{ product.id }}" value="Edit" /></td>
+                                <td><input type="submit" id="delete" itemid="{{ product.id }}" value="Delete" /></td>
                             </tr>
                         {% endfor %}
                     </tbody>
