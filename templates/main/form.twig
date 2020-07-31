@@ -11,9 +11,9 @@
     <div class="both">
         <nav class="left">
             <ul>
-                <li><a href="#">MENU</a></li>
-                <li><a href="#">MENU</a></li>
-                <li><a href="#">MENU</a></li>
+                {% for folders in category_list %}
+                    <li><a href="#">{{ folders.category }}</a></li>
+                {% endfor %}
             </ul>
         </nav>
         <div class="right">

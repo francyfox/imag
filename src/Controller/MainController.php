@@ -16,11 +16,14 @@ class MainController extends AbstractController
     {
         $connect = $db->connect();
         $items_list = $products->items_list($connect);
+        $cat_list = $products->cat_list($connect);
         $products->delete($connect);
-
+        $products->add_product($connect);
+        $products->add_category($connect);
         return $this->render('main/index.twig', [
             'controller_name' => 'MainController',
-            'items_list' => $items_list
+            'items_list' => $items_list,
+            'category_list' => $cat_list
         ]);
     }
 }
