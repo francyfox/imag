@@ -123,9 +123,6 @@ table td {
   padding: 10px;
   border: 1px solid #FF8400;
 }
-table td:nth-child(2) {
-  min-width: 13vw;
-}
 table .elem {
   display: block;
   padding: 2px;
@@ -151,5 +148,15 @@ table .elem {
   display: flex;
   flex-direction: column;
   max-width: 300px;
+}
+.edit {
+  font-size: 12px;
+  padding: 5px;
+  color: #FF8400;
+  font-family: 'Rowdies', cursive;
+  background: transparent;
+  border: 1px solid #FF8400;
+  border-radius: 0;
+  text-decoration: none;
 }
 /*# sourceMappingURL=main.css.map */

@@ -5,6 +5,7 @@ namespace App\Services;
 
 class products
 {
+
     public function reload(string $url){
         header( "Location: http://127.0.0.1:8000/$url" );
         die;
@@ -58,11 +59,25 @@ class products
     }
 
     public function add_product($mysqli){
-
-
         if(isset($_GET['add']))
         {
             var_dump($_GET['name']);
+            $p_name = mysqli_real_escape_string($mysqli, $_GET['name']);
+            $p_category = mysqli_real_escape_string($mysqli, $_GET['category']);
+            $p_num = mysqli_real_escape_string($mysqli, $_GET['number']);
+            $p_price = mysqli_real_escape_string($mysqli, $_GET['price']);
+            $p_id = 0;
+            $query ="INSERT INTO products VALUES ($p_id, ff, '$p_category', '$p_name', $p_num, $p_price)";
+            $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
+            $p_id++;
+            products::reload('main');
+        }
+    }
+
+    public function edit_product($mysqli){
+        if(isset($_GET['edit']))
+        {
+            $list = $this->items_list($mysqli);
             $p_name = mysqli_real_escape_string($mysqli, $_GET['name']);
             $p_category = mysqli_real_escape_string($mysqli, $_GET['category']);
             $p_num = mysqli_real_escape_string($mysqli, $_GET['number']);

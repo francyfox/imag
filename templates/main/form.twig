@@ -27,6 +27,7 @@
                     <tbody class="elem">
                         <tr>
                             <td>ID</td>
+                            <td>C_ID</td>
                             <td>Категория</td>
                             <td>Имя</td>
                             <td>Кол-во</td>
@@ -36,13 +37,26 @@
                         {% for product in items_list %}
                             <tr>
                                 <td>{{ product.id }}</td>
+                                <td>{{ product.category_id }}</td>
                                 <td>{{ product.category }}</td>
                                 <td>{{ product.name }}</td>
                                 <td>{{ product.num }}</td>
                                 <td>{{ product.price }}</td>
 
-                                <td><input type="submit" id="add" itemid="{{ product.id }}" value="Edit" /></td>
+                                <td><a href="/edit/product?edit={{ product.id }} " class="edit">EDIT</a></td>
                                 <td><input type="submit" id="delete" itemid="{{ product.id }}" value="Delete" /></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="slider">
+                                        <img width="100" height="100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRRenJNlDXQnSYbxWOqQsxBKuXMfQF0gcno6g&usqp=CAU" alt="">
+                                    </div>
+                                </td>
+                                <td>
+                                    BIO
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

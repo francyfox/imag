@@ -1,0 +1,43 @@
+{% include 'main/header.twig' %}
+<div class="wrap">
+    <div class="example-wrapper">
+
+        <div class="content">
+            <h1>Hello {{ controller_name }}!</h1>
+            {{ dump(category_list)}}
+            This friendly message is coming from:
+            <ul>
+                <li>Your controller at <code><a href="{{ '/home/imag2/src/Controller/AddProductController.php'|file_link(0) }}">src/Controller/AddProductController.php</a></code></li>
+                <li>Your template at <code><a href="{{ '/home/imag2/templates/add_product/index.html.twig'|file_link(0) }}">templates/add_product/index.html.twig</a></code></li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="content">
+        <form method="get" action="/main" enctype="application/x-www-form-urlencoded | multipart/form-data | text/plain">
+            <div class="links">
+                <div class="col">
+                    <input type="hidden" name="add" value="new">
+                    <select size="1" name="category">
+                        <option disabled>Категория</option>
+                        {% for folders in category_list %}
+
+                            <option id="{{ folders.category_id }}"{% if folders.category_id == _get.edit %} selected {% endif %}>{{ folders.category }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="text" placeholder="Имя" name="name" required>
+                    <label for="number">Количество на складе:</label>
+                    <input type="number" name="number">
+                    <input type="text" name="price" placeholder="Цена">
+                    <input type="submit" value="ADD PRODUCT">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="content">
+        <div class="links">
+            <a href="/main">BACK TO MAIN</a>
+        </div>
+    </div>
+</div>
+{% include 'main/bottom.twig' %}

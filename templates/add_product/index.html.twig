@@ -19,7 +19,7 @@
                         <div class="col">
                             <input type="hidden" name="add" value="new">
                             <select size="1" name="category">
-                                <option disabled>Категория</option>
+                                <option selected disabled>Категория</option>
                                 {% for folders in category_list %}
                                     <option>{{ folders.category }}</option>
                                 {% endfor %}
