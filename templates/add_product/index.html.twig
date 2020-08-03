@@ -18,10 +18,11 @@
                     <div class="links">
                         <div class="col">
                             <input type="hidden" name="add" value="new">
-                            <select size="1" name="category">
+                            <input type="hidden" name="category" value="">
+                            <select size="1" name="category_id" id="cat_sel">
                                 <option selected disabled>Категория</option>
                                 {% for folders in category_list %}
-                                    <option>{{ folders.category }}</option>
+                                    <option value="{{ folders.category_id }}">{{ folders.category }}</option>
                                 {% endfor %}
                             </select>
                             <input type="text" placeholder="Имя" name="name" required>

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Repository\product_rep;
 
 class products
 {
@@ -49,7 +50,8 @@ class products
     public function add_category($mysqli){
         if(isset($_GET['add_cat']))
         {
-            $cat_id = 0;
+            $product_rep = new product_rep;
+            $cat_id = $product_rep->getCatId();
             $cat_name = mysqli_real_escape_string($mysqli, $_GET['cat_name']);
             $query ="INSERT INTO category VALUES ($cat_id, '$cat_name')";
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
@@ -61,38 +63,24 @@ class products
     public function add_product($mysqli){
         if(isset($_GET['add']))
         {
-            var_dump($_GET['name']);
+            $product_rep = new product_rep;
+            $c_id = mysqli_real_escape_string($mysqli, $_GET['category_id']);
             $p_name = mysqli_real_escape_string($mysqli, $_GET['name']);
             $p_category = mysqli_real_escape_string($mysqli, $_GET['category']);
             $p_num = mysqli_real_escape_string($mysqli, $_GET['number']);
             $p_price = mysqli_real_escape_string($mysqli, $_GET['price']);
             $p_id = 0;
-            $query ="INSERT INTO products VALUES ($p_id, ff, '$p_category', '$p_name', $p_num, $p_price)";
+            $query ="INSERT INTO products VALUES ($p_id, $c_id, '$p_category', '$p_name', $p_num, $p_price)";
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
             $p_id++;
             products::reload('main');
         }
     }
 
-    public function edit_product($mysqli){
-        if(isset($_GET['edit']))
-        {
-            $list = $this->items_list($mysqli);
-            $p_name = mysqli_real_escape_string($mysqli, $_GET['name']);
-            $p_category = mysqli_real_escape_string($mysqli, $_GET['category']);
-            $p_num = mysqli_real_escape_string($mysqli, $_GET['number']);
-            $p_price = mysqli_real_escape_string($mysqli, $_GET['price']);
-            $p_id = 0;
-            $query ="INSERT INTO products VALUES ($p_id, $p_id, '$p_category', '$p_name', $p_num, $p_price)";
-            $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
-            $p_id++;
-            products::reload('main');
+    public function update_product($mysqli){
+        if(isset($_GET['edit'])){
+            $list = $this->cat_list(mysqli);
+
         }
     }
 }
-
-/*
- * INSERT INTO products (id, category, name, num, price) VALUES ("1", "Стиралка", "SUMSUNG", "12", "70000");
- * INSERT INTO products (id, category, name, num, price) VALUES ("2", "Телевизор", "LG", "7", "120000");
- * INSERT INTO products (id, category, name, num, price) VALUES ("3", "Пылесос", "KARCHER", "7", "80000");
- */
