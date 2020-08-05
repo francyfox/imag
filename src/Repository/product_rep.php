@@ -6,13 +6,14 @@ namespace App\Repository;
 
 class product_rep
 {
-    private $cat_id = 0;
+    private $product_id;
 
     /**
-     * @param int $cat_id
+     * @return mixed
      */
 
-    public function getCatId(){
-        return $this->cat_id;
+    public function setProductId($product_id) : int {
+        $this->product_id = $product_id;
     }
+
 }

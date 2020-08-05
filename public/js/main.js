@@ -8,9 +8,7 @@ $(function() {
         });
         $('.nice-select .list').click(function(e) {
             let $name = $(this).find('.option.selected').text();
-            $('input[name="category"]').val($name)
-            // let $param = jQuery.param({category_id: $id});
-            // window.history.replaceState({}, '', `${location.pathname}?${$param}`);
+            $('input[name="category"]').val($name);
             console.log($id);
 
         });

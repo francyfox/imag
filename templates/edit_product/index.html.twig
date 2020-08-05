@@ -4,7 +4,10 @@
 
         <div class="content">
             <h1>Hello {{ controller_name }}!</h1>
-            {{ dump(category_list)}}
+            {% block body %}
+                {% set id = 12 %}
+            {% endblock %}
+            {{ dump(getProdById.setProductId(id|raw))}}
             This friendly message is coming from:
             <ul>
                 <li>Your controller at <code><a href="{{ '/home/imag2/src/Controller/AddProductController.php'|file_link(0) }}">src/Controller/AddProductController.php</a></code></li>
@@ -22,14 +25,14 @@
                         <option disabled>Категория</option>
                         {% for folders in category_list %}
 
-                            <option id="{{ folders.category_id }}"{% if folders.category_id == _get.edit %} selected {% endif %}>{{ folders.category }}</option>
+                            <option id="{{ folders.category_id }}"{% if folders.category_id == _get.c_id %} selected {% endif %}>{{ folders.category }}</option>
                         {% endfor %}
                     </select>
                     <input type="text" placeholder="Имя" name="name" required>
                     <label for="number">Количество на складе:</label>
                     <input type="number" name="number">
                     <input type="text" name="price" placeholder="Цена">
-                    <input type="submit" value="ADD PRODUCT">
+                    <input type="submit" value="EDIT PRODUCT">
                 </div>
             </div>
         </form>

@@ -77,10 +77,23 @@ class products
         }
     }
 
-    public function update_product($mysqli){
-        if(isset($_GET['edit'])){
-            $list = $this->cat_list(mysqli);
+    public function __getProductById($product_id) : array {
 
+        $query = "SELECT * FROM products where id= setProductId($product_id)";
+        $result = mysqli_query($query) or die(mysqli_error());
+
+        if(!$result) {
+            die('MySQL Error: ' . mysqli_error());
         }
+        else {
+            $row = mysqli_fetch_array($result);
+            if ($row === FALSE) {
+                $name = $row['name'];
+            }
+            else {
+                die('MySQL Error: ' . mysqli_error());
+            }
+        }
+        return $result;
     }
 }

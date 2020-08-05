@@ -43,7 +43,7 @@
                                 <td>{{ product.num }}</td>
                                 <td>{{ product.price }}</td>
 
-                                <td><a href="/edit/product?edit={{ product.id }} " class="edit">EDIT</a></td>
+                                <td><a href="/edit/product?edit={{ product.id }}&c_id={{ product.category_id }}" class="edit">EDIT</a></td>
                                 <td><input type="submit" id="delete" itemid="{{ product.id }}" value="Delete" /></td>
                             </tr>
                             <tr>
