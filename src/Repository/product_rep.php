@@ -12,8 +12,12 @@ class product_rep
      * @return mixed
      */
 
-    public function setProductId($product_id) : int {
-        $this->product_id = $product_id;
+    public function __set($property, $value){
+        $this->$property = $value;
+    }
+
+    public function __get($property){
+        return $this->$property;
     }
 
 }

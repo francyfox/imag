@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\product_rep;
+use App\Repository\product_rep as rep;
 
 class products
 {
@@ -51,7 +52,7 @@ class products
         if(isset($_GET['add_cat']))
         {
             $product_rep = new product_rep;
-            $cat_id = $product_rep->getCatId();
+            $cat_id = $product_rep->getCatId();  // TODO:GET CATEGORY
             $cat_name = mysqli_real_escape_string($mysqli, $_GET['cat_name']);
             $query ="INSERT INTO category VALUES ($cat_id, '$cat_name')";
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
@@ -77,16 +78,21 @@ class products
         }
     }
 
-    public function __getProductById($product_id) : array {
+    public function __getProductById($mysqli) : array {
 
-        $query = "SELECT * FROM products where id= setProductId($product_id)";
-        $result = mysqli_query($query) or die(mysqli_error());
+        $rep = new product_rep();
+        $product_id = $rep->product_id;
+        $query = "SELECT * FROM products where id= '$product_id'";
+        $result = mysqli_query($mysqli, $query) or die(mysqli_error());
 
         if(!$result) {
             die('MySQL Error: ' . mysqli_error());
         }
+
         else {
-            $row = mysqli_fetch_array($result);
+            $row[] = mysqli_fetch_array($result);
+            return $row;
+
             if ($row === FALSE) {
                 $name = $row['name'];
             }
@@ -94,6 +100,6 @@ class products
                 die('MySQL Error: ' . mysqli_error());
             }
         }
-        return $result;
+
     }
 }

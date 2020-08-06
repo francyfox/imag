@@ -17,14 +17,17 @@ class EditProductController extends AbstractController
     public function index(products $products, db $db, product_rep $rep)
     {
         $connect = $db->connect();
-        $obj = new $rep();
 
+        $obj = [
+            new $rep,
+            new $products
+        ];
+        $obj[0]->product_id = 12;
+        $obj[1]->__getProductById($connect);
         $cat_list = $products->cat_list($connect);
         $items_list = $products->items_list($connect);
         return $this->render('edit_product/index.html.twig', [
-            'id' => 0,
-            'setProdId' => 'null',
-            'getProdById' => $obj,
+            'obj' => $obj,
             'items_list' => $items_list,
             'controller_name' => 'EditProductController',
             'category_list' => $cat_list
