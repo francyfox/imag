@@ -22,11 +22,13 @@ class EditProductController extends AbstractController
             new $rep,
             new $products
         ];
-        $obj[0]->product_id = 12;
-        $obj[1]->__getProductById($connect);
+
+        $id = $obj[0]->product_id;
+        $obj[1]->__getProductById($connect, $id);
         $cat_list = $products->cat_list($connect);
         $items_list = $products->items_list($connect);
         return $this->render('edit_product/index.html.twig', [
+            'connect' => $connect,
             'obj' => $obj,
             'items_list' => $items_list,
             'controller_name' => 'EditProductController',

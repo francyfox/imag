@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Repository\product_rep;
 use App\Repository\product_rep as rep;
 
 class products
 {
+
+    public $GetProdById = [];
 
     public function reload(string $url){
         header( "Location: http://127.0.0.1:8000/$url" );
@@ -78,10 +79,8 @@ class products
         }
     }
 
-    public function __getProductById($mysqli) : array {
+    public function __getProductById($mysqli, $product_id) : array {
 
-        $rep = new product_rep();
-        $product_id = $rep->product_id;
         $query = "SELECT * FROM products where id= '$product_id'";
         $result = mysqli_query($mysqli, $query) or die(mysqli_error());
 
@@ -90,16 +89,15 @@ class products
         }
 
         else {
-            $row[] = mysqli_fetch_array($result);
-            return $row;
+            $product = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $this->GetProdById = $row;
+            }
 
-            if ($row === FALSE) {
-                $name = $row['name'];
-            }
-            else {
-                die('MySQL Error: ' . mysqli_error());
-            }
+
         }
+        return $product;
+        var_dump($product);
 
     }
 }
