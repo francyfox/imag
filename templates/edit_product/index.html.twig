@@ -5,7 +5,10 @@
         <div class="content">
             <h1>Hello {{ controller_name }}!</h1>
             {{ obj[0].__set('product_id', 12)}}
-            {{ dump(obj)}}
+            {{ dump( obj[0].__get('product_id')) }}
+            {{ dump(obj[1]) }}
+            {{ dump(obj) }}
+
             This friendly message is coming from:
             <ul>
                 <li>Your controller at <code><a href="{{ '/home/imag2/src/Controller/AddProductController.php'|file_link(0) }}">src/Controller/AddProductController.php</a></code></li>

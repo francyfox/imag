@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Repository\product_rep;
 use App\Repository\product_rep as rep;
 
 class products
 {
 
-    public $GetProdById = [];
+    private $GetProdById = [];
 
     public function reload(string $url){
         header( "Location: http://127.0.0.1:8000/$url" );
@@ -93,11 +94,11 @@ class products
             while ($row = mysqli_fetch_assoc($result)) {
                 $this->GetProdById = $row;
             }
-
-
+            return $product;
         }
-        return $product;
-        var_dump($product);
+
+        $rep = rep;
+        $rep->status('product_id', false);
 
     }
 }
