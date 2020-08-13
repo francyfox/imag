@@ -4,10 +4,8 @@
 
         <div class="content">
             <h1>Hello {{ controller_name }}!</h1>
-            {{ obj[0].__set('product_id', 12)}}
-            {{ dump( obj[0].__get('product_id')) }}
-            {{ dump(obj[1]) }}
-            {{ dump(obj) }}
+            {% set product = obj[0].__get('GetProdById') %}
+            {{ dump(product)}}
 
             This friendly message is coming from:
             <ul>
@@ -21,18 +19,19 @@
         <form method="get" action="/main" enctype="application/x-www-form-urlencoded | multipart/form-data | text/plain">
             <div class="links">
                 <div class="col">
-                    <input type="hidden" name="add" value="new">
-                    <select size="1" name="category">
+                    <input type="hidden" name="update" value="{{ product.id }}">
+                    <input type="hidden" name="category" value="">
+                    <select size="1" name="category_id" id="cat_sel">
                         <option disabled>Категория</option>
                         {% for folders in category_list %}
 
-                            <option id="{{ folders.category_id }}"{% if folders.category_id == _get.c_id %} selected {% endif %}>{{ folders.category }}</option>
+                            <option value="{{ folders.category_id }}" id="{{ folders.category_id }}"{% if folders.category_id == _get.c_id %} selected {% endif %}>{{ folders.category }}</option>
                         {% endfor %}
                     </select>
-                    <input type="text" placeholder="Имя" name="name" required>
+                    <input type="text" placeholder="Имя" name="name" value="{{ product.name }}" required>
                     <label for="number">Количество на складе:</label>
-                    <input type="number" name="number">
-                    <input type="text" name="price" placeholder="Цена">
+                    <input type="number" name="number" value="{{ product.num }}">
+                    <input type="text" name="price" placeholder="Цена" value="{{ product.price }}">
                     <input type="submit" value="EDIT PRODUCT">
                 </div>
             </div>

@@ -15,11 +15,12 @@ class MainController extends AbstractController
     public function index(products $products, db $db)
     {
         $connect = $db->connect();
-        $items_list = $products->items_list($connect);
-        $cat_list = $products->cat_list($connect);
-        $products->delete($connect);
-        $products->add_product($connect);
-        $products->add_category($connect);
+        $items_list = $products->items_list();
+        $cat_list = $products->cat_list();
+        $products->delete();
+        $products->add_product();
+        $products->add_category();
+        $products->update_product();
         return $this->render('main/index.twig', [
             'controller_name' => 'MainController',
             'items_list' => $items_list,

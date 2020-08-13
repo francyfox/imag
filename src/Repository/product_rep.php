@@ -3,6 +3,7 @@
 
 namespace App\Repository;
 
+use App\Services\products as products;
 
 class product_rep
 {
@@ -11,7 +12,6 @@ class product_rep
      */
     private $product_id;
 
-    private $state;
 
 //    /**
 //     * @var string $product_name
@@ -35,17 +35,9 @@ class product_rep
 //     * @var float $product_price;
 //     */
 
-    public function status($property, $value) : array {
-        $state_new = new $this->state;
-        $result =  $state_new = [
-            $property => $value
-        ];
-        return $result;
-    }
 
     public function __set($property, $value){
         $this->$property = $value;
-        $this->status($property, true);
     }
 
     public function __get($property){

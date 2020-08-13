@@ -15,7 +15,7 @@ class AddProductController extends AbstractController
     public function index(products $products, db $db)
     {
         $connect = $db->connect();
-        $cat_list = $products->cat_list($connect);
+        $cat_list = $products->cat_list();
         return $this->render('add_product/index.html.twig', [
             'controller_name' => 'AddProductController',
             'category_list' => $cat_list
