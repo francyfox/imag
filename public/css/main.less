@@ -5,6 +5,30 @@
 @-o-keyframes      fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
 @keyframes         fade-in {   0% { opacity: 0.1; }   100% { opacity: 1; }   }
 
+/**
+  AWESOME
+*/
+
+.fa-times-circle:before{
+  color: #FF8400;
+}
+.fa-times-circle{
+  display: flex;
+  align-items: center;
+  input{
+    margin-left: 6px;
+  }
+  &:hover{
+    cursor:pointer
+  }
+  &:hover:before{
+    color: #1299DA;
+  }
+  animation: fade-in 1s linear; /* IE 10+, Fx 29+ */
+}
+
+
+
 body{
   -webkit-animation: fade-in 1s linear; /* Safari 4+ */
   -moz-animation: fade-in 1s linear; /* Fx 5+ */
@@ -62,6 +86,7 @@ input[type="text"], select, input[type="number"]{
 
   .both{
     display: flex;
+    margin: 20px;
   }
 
   .left{
@@ -89,11 +114,53 @@ input[type="text"], select, input[type="number"]{
   }
 }
 
-table{
-  td{
-    padding: 10px;
-    border: 1px solid #FF8400;
+.table{
+
+    ul{
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(8, max-content);
+      grid-auto-rows: minmax(50px, auto);
+    }
+    li{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid #FF8400;
+    }
+
+  li:nth-child(1){
+    min-width: 50px;
   }
+
+  li:nth-child(2){
+    min-width: 80px;
+  }
+
+  li:nth-child(3){
+    min-width: 120px;
+  }
+
+  li:nth-child(4){
+    min-width: 140px;
+    max-width: 140px;
+  }
+
+  li:nth-child(5){
+    min-width: 80px;
+  }
+
+  li:nth-child(6){
+    min-width: 65px;
+  }
+
+    .flex{
+      flex-shrink: 0;
+      flex-grow: 1;
+  }
+
   .elem{
     display: block;
     padding: 2px;
@@ -153,4 +220,23 @@ table{
 .nice-select .option.focus, .nice-select .option.selected.focus, .nice-select .option:hover{
   background-color: #FF8400 !important;
   color: #222 !important;
+}
+
+.folders{
+  li{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+#pagination-container{
+  margin-top: 10px;
+  ul{
+    display: flex;
+  }
+  li{
+    min-width: initial !important;
+    display: flex;
+    border: 0;
+  }
 }

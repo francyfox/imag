@@ -10,11 +10,14 @@
     </div>
     <div class="both">
         <nav class="left">
-            <ul>
-                {% for folders in category_list %}
-                    <li><a href="#">{{ folders.category }}</a></li>
-                {% endfor %}
-            </ul>
+            <form class="folders" method="get" action="/main">
+                <input type="hidden" class="get" name="cat_id" value="">
+                <ul>
+                    {% for folders in category_list %}
+                        <li><a href="#">[{{ folders.category_id }}] - {{ folders.category }}</a> <i class="fas fa-times-circle"><input type="submit" class  ="delete" itemid="{{ folders.category_id }}" value="Delete" /></i></li>
+                    {% endfor %}
+                </ul>
+            </form>
         </nav>
         <div class="right">
             <div class="links">
@@ -22,46 +25,38 @@
                 <a href="{{ path('add_category') }}" class="but">NEW CATEGORY</a>
                 <a href="/csv">IMPORT CSV</a>
             </div>
-            <form method="get" action="/main">
-                <table>
-                    <tbody class="elem">
-                        <tr>
-                            <td>ID</td>
-                            <td>C_ID</td>
-                            <td>Категория</td>
-                            <td>Имя</td>
-                            <td>Кол-во</td>
-                            <td>Цена</td>
-                        </tr>
-                        <input type="hidden" name="id" value="">
+            <form class="table" method="get" action="/main">
+                <input type="hidden" class="get" name="prod_id" value="">
+                    <ul>
+                            <li>ID</li>
+                            <li>C_ID</li>
+                            <li>Категория</li>
+                            <li>Имя</li>
+                            <li>Кол-во</li>
+                            <li>Цена</li>
+                        <li></li>
+                        <li></li>
+
+                    </ul>
+                    <div class="paginationjs paginationjs paginationjs-theme-yellow">
+                        <div id="data-container">
                         {% for product in items_list %}
-                            <tr>
-                                <td>{{ product.id }}</td>
-                                <td>{{ product.category_id }}</td>
-                                <td>{{ product.category }}</td>
-                                <td>{{ product.name }}</td>
-                                <td>{{ product.num }}</td>
-                                <td>{{ product.price }}</td>
+                                <ul>
+                                    <li>{{ product.id }}</li>
+                                    <li>{{ product.category_id }}</li>
+                                    <li class="flex">{{ product.category }}</li>
+                                    <li class="flex">{{ product.name }}</li>
+                                    <li>{{ product.num }}</li>
+                                    <li>{{ product.price }}</li>
 
-                                <td><a href="/edit/product?edit={{ product.id }}&c_id={{ product.category_id }}" class="edit">EDIT</a></td>
-                                <td><input type="submit" id="delete" itemid="{{ product.id }}" value="Delete" /></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <div class="slider">
-                                        <img width="100" height="100" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRRenJNlDXQnSYbxWOqQsxBKuXMfQF0gcno6g&usqp=CAU" alt="">
-                                    </div>
-                                </td>
-                                <td>
-                                    BIO
-                                </td>
-                            </tr>
+                                    <li><a href="/edit/product?edit={{ product.id }}&c_id={{ product.category_id }}" class="edit">EDIT</a></li>
+                                    <li><input type="submit" class="delete" itemid="{{ product.id }}" value="Delete" /></li>
+                                </ul>
+
                         {% endfor %}
-                    </tbody>
-
-                </table>
+                        </div>
+                        <div id="pagination-container"></div>
+                    </div>
             </form>
         </div>
     </div>

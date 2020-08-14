@@ -17,7 +17,8 @@ class MainController extends AbstractController
         $connect = $db->connect();
         $items_list = $products->items_list();
         $cat_list = $products->cat_list();
-        $products->delete();
+        $products->delete_category();
+        $products->delete_product();
         $products->add_product();
         $products->add_category();
         $products->update_product();

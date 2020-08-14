@@ -51,18 +51,32 @@ class products
         return $category;
     }
 
-    public function delete(){
+    public function delete_product(){
 
         $mysqli = $this->connect();
 
-        if(isset($_GET['id']))
+        if(isset($_GET['prod_id']))
         {
-            $id = mysqli_real_escape_string($mysqli, $_GET['id']);
+            $id = mysqli_real_escape_string($mysqli, $_GET['prod_id']);
             $query ="DELETE FROM products WHERE id = '$id'";
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
             products::reload('main');
         }
     }
+
+    public function delete_category(){
+
+        $mysqli = $this->connect();
+
+        if(isset($_GET['cat_id']))
+        {
+            $id = mysqli_real_escape_string($mysqli, $_GET['cat_id']);
+            $query ="DELETE FROM category WHERE category_id = '$id'";
+            $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
+            products::reload('main');
+        }
+    }
+
 
     public function add_category(){
 
