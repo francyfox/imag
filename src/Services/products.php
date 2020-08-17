@@ -13,6 +13,11 @@ class products
     private $GetProdById = [];
     private $ImgUrls = [];
 
+
+    public function __set($property, $value){
+        $this->$property = $value;
+    }
+
     public function __get($property){
         return $this->$property;
     }
@@ -96,6 +101,82 @@ class products
         }
     }
 
+    public function getImgUrls($p_id){
+
+        $mysqli = $this->connect();
+
+        if(isset($_GET['imgurls'])) {
+
+            $project_path = getenv('OLDPWD');
+            $path = "$project_path/public/img";
+
+            if (!file_exists($path)) {
+                mkdir($path, 0700);
+            }
+
+            $urls = explode('/orig', $_GET['imgurls']);
+
+            $orig = '/orig';
+            $urlhead = implode($orig, $urls);
+            $urlspit = preg_split('/\s+/', $urlhead);
+            $this->ImgUrls = $urlspit;
+
+            $type = [
+                'image/gif' => 'gif',
+                'image/jpeg' => 'jpeg',
+                'image/png' => 'png',
+                'image/svg+xml' => 'svg',
+                'image/tiff' => 'tiff',
+                'image/webp' => 'webp'
+            ];
+
+            for($i=0; $i < count($urls) - 1; $i++){
+                if (get_headers($urlspit[$i]) != null){
+                    $header[$i] = get_headers($urlspit[$i], 1);
+                }
+
+                if ($header[$i]['Content-Type'] != null){
+                    $head_type[$i] = $header[$i]['Content-Type'];
+                }else{
+                    throw new Exception('Error! Header Content Type Not Found');
+                }
+
+                $typeofimage = $head_type[$i];
+
+                $date = date('h:i:s');
+                $saveTo = './img/'. 'img__' . $header[$i]['Content-Length'] . '_' . '.'. $type[$typeofimage];
+                $fp = fopen($saveTo, 'w+');
+
+                if($fp === false){
+                    echo ('Could not open: ' . $saveTo);
+                }
+
+                $query ="INSERT INTO fotos VALUES ($p_id, '$saveTo')";
+                $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
+
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11');
+
+                curl_setopt($ch, CURLOPT_URL, $urlspit[$i]);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_FILE, $fp);
+
+                if(!curl_exec($ch)){
+                    curl_close($ch);
+                    fclose($fp);
+                    return false;
+                }
+
+                fflush($fp);
+                fclose($fp);
+                curl_close($ch);
+//                return true;
+
+            }
+        }
+
+    }
+
     public function add_product(){
 
         $mysqli = $this->connect();
@@ -103,6 +184,7 @@ class products
         if(isset($_GET['add']))
         {
             $product_rep = new rep;
+
             $c_id = mysqli_real_escape_string($mysqli, $_GET['category_id']);
             $p_name = mysqli_real_escape_string($mysqli, $_GET['name']);
             $p_category = mysqli_real_escape_string($mysqli, $_GET['category']);
@@ -112,6 +194,9 @@ class products
             $query ="INSERT INTO products VALUES ($p_id, $c_id, '$p_category', '$p_name', $p_num, $p_price)";
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
             $p_id++;
+
+            $query2 = "SELECT * FROM products where id= '$product_id'";
+            $getFotoId = mysqli_query($mysqli, ) or die("Ошибка " . mysqli_error($mysqli));
             products::reload('main');
         }
     }
@@ -156,75 +241,5 @@ class products
 
     }
 
-    public function getImgUrls(){
-        if(isset($_GET['imgurls'])) {
 
-            $project_path = getenv('OLDPWD');
-            $path = "$project_path/public/img";
-
-            if (!file_exists($path)) {
-                mkdir($path, 0700);
-            }
-
-            $urls = explode('/orig', $_GET['imgurls']);
-
-            $orig = '/orig';
-            $urlhead = implode($orig, $urls);
-            $urlspit = preg_split('/\s+/', $urlhead);
-
-            $type = [
-                'image/gif' => 'gif',
-                'image/jpeg' => 'jpeg',
-                'image/png' => 'png',
-                'image/svg+xml' => 'svg',
-                'image/tiff' => 'tiff',
-                'image/webp' => 'webp'
-            ];
-
-
-
-            for($i=0; $i < count($urls) - 1; $i++){
-                if (get_headers($urlspit[$i]) != null){
-                    $header[$i] = get_headers($urlspit[$i], 1);
-                }
-
-                if ($header[$i]['Content-Type'] != null){
-                    $head_type[$i] = $header[$i]['Content-Type'];
-                }else{
-                    throw new Exception('Error! Header Content Type Not Found');
-                }
-
-                $typeofimage = $head_type[$i];
-
-                $date = date('h:i:s');
-                $saveTo = './img/'. 'img__' . $header[$i]['Content-Length'] . '_' . $date . '.'. $type[$typeofimage];
-                $fp = fopen($saveTo, 'w+');
-
-                if($fp === false){
-                    echo ('Could not open: ' . $saveTo);
-                }
-
-                $ch = curl_init($urlspit[$i]);
-                $options = array(CURLOPT_URL => $urlspit[$i],
-                    CURLOPT_HEADER => false,
-                );
-                curl_setopt_array($ch, $options);
-                curl_exec($ch);
-
-                if(curl_errno($ch)){
-                    echo (curl_error($ch));
-                }
-                $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-                curl_close($ch);
-
-                if($statusCode == 200){
-                    echo 'Downloaded!';
-                } else{
-                    echo "Status Code: " . $statusCode;
-                }
-            }
-        }
-
-    }
 }
