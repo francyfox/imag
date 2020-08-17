@@ -5,11 +5,13 @@ namespace App\Services;
 
 use App\Repository\product_rep as rep;
 use App\Services\db as db;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class products
 {
 
     private $GetProdById = [];
+    private $ImgUrls = [];
 
     public function __get($property){
         return $this->$property;
@@ -85,7 +87,7 @@ class products
         if(isset($_GET['add_cat']))
         {
             $product_rep = new rep;
-            $cat_id = $product_rep->getCatId();  // TODO:GET CATEGORY
+            $cat_id = 0;
             $cat_name = mysqli_real_escape_string($mysqli, $_GET['cat_name']);
             $query ="INSERT INTO category VALUES ($cat_id, '$cat_name')";
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
@@ -150,6 +152,78 @@ class products
                 $this->GetProdById = $row;
             }
             return $product;
+        }
+
+    }
+
+    public function getImgUrls(){
+        if(isset($_GET['imgurls'])) {
+
+            $project_path = getenv('OLDPWD');
+            $path = "$project_path/public/img";
+
+            if (!file_exists($path)) {
+                mkdir($path, 0700);
+            }
+
+            $urls = explode('/orig', $_GET['imgurls']);
+
+            $orig = '/orig';
+            $urlhead = implode($orig, $urls);
+            $urlspit = preg_split('/\s+/', $urlhead);
+
+            $type = [
+                'image/gif' => 'gif',
+                'image/jpeg' => 'jpeg',
+                'image/png' => 'png',
+                'image/svg+xml' => 'svg',
+                'image/tiff' => 'tiff',
+                'image/webp' => 'webp'
+            ];
+
+
+
+            for($i=0; $i < count($urls) - 1; $i++){
+                if (get_headers($urlspit[$i]) != null){
+                    $header[$i] = get_headers($urlspit[$i], 1);
+                }
+
+                if ($header[$i]['Content-Type'] != null){
+                    $head_type[$i] = $header[$i]['Content-Type'];
+                }else{
+                    throw new Exception('Error! Header Content Type Not Found');
+                }
+
+                $typeofimage = $head_type[$i];
+
+                $date = date('h:i:s');
+                $saveTo = './img/'. 'img__' . $header[$i]['Content-Length'] . '_' . $date . '.'. $type[$typeofimage];
+                $fp = fopen($saveTo, 'w+');
+
+                if($fp === false){
+                    echo ('Could not open: ' . $saveTo);
+                }
+
+                $ch = curl_init($urlspit[$i]);
+                $options = array(CURLOPT_URL => $urlspit[$i],
+                    CURLOPT_HEADER => false,
+                );
+                curl_setopt_array($ch, $options);
+                curl_exec($ch);
+
+                if(curl_errno($ch)){
+                    echo (curl_error($ch));
+                }
+                $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+                curl_close($ch);
+
+                if($statusCode == 200){
+                    echo 'Downloaded!';
+                } else{
+                    echo "Status Code: " . $statusCode;
+                }
+            }
         }
 
     }

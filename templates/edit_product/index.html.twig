@@ -24,7 +24,6 @@
                     <select size="1" name="category_id" id="cat_sel">
                         <option disabled>Категория</option>
                         {% for folders in category_list %}
-
                             <option value="{{ folders.category_id }}" id="{{ folders.category_id }}"{% if folders.category_id == _get.c_id %} selected {% endif %}>{{ folders.category }}</option>
                         {% endfor %}
                     </select>

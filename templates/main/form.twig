@@ -8,17 +8,38 @@
             <li>Your template at <code><a href="{{ '/home/imag2/templates/add_product/index.html.twig'|file_link(0) }}">templates/add_product/index.html.twig</a></code></li>
         </ul>
     </div>
+
+
+
     <div class="both">
-        <nav class="left">
-            <form class="folders" method="get" action="/main">
-                <input type="hidden" class="get" name="cat_id" value="">
-                <ul>
-                    {% for folders in category_list %}
-                        <li><a href="#">[{{ folders.category_id }}] - {{ folders.category }}</a> <i class="fas fa-times-circle"><input type="submit" class  ="delete" itemid="{{ folders.category_id }}" value="Delete" /></i></li>
-                    {% endfor %}
-                </ul>
-            </form>
-        </nav>
+        <div class="left">
+            <aside class="auth">
+                <form class="folders" method="get" action="/main">
+                    <h2>Авторизация</h2>
+                    <div class="form">
+                        <div class="text">
+
+                            <div class="img"></div>
+                            <h3>Bonjour {% if env_name %} <span class="not_auth">{{ env_name }}</span>{% endif %}</h3>
+                            <input type="text" placeholder="USERNAME">
+                            <input type="password" placeholder="PASSWORD">
+                            <input type="submit" value="LOGIN">
+                            U are not auth, pls <a href="/reg">register</a> on shop
+                        </div>
+                    </div>
+                </form>
+            </aside>
+            <nav class="nav">
+                <form class="folders" method="get" action="/main">
+                    <input type="hidden" class="get" name="cat_id" value="">
+                    <ul>
+                        {% for folders in category_list %}
+                            <li><a href="#">[{{ folders.category_id }}] - {{ folders.category }}</a> <i class="fas fa-times-circle"><input type="submit" class  ="delete" itemid="{{ folders.category_id }}" value="Delete" /></i></li>
+                        {% endfor %}
+                    </ul>
+                </form>
+            </nav>
+        </div>
         <div class="right">
             <div class="links">
                 <a href="{{ path('add_product') }}">ADD</a>
@@ -52,7 +73,6 @@
                                     <li><a href="/edit/product?edit={{ product.id }}&c_id={{ product.category_id }}" class="edit">EDIT</a></li>
                                     <li><input type="submit" class="delete" itemid="{{ product.id }}" value="Delete" /></li>
                                 </ul>
-
                         {% endfor %}
                         </div>
                         <div id="pagination-container"></div>
