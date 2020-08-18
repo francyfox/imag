@@ -3,12 +3,21 @@
     <div class="example-wrapper">
 
         <div class="content">
-            <h1>Hello {{ controller_name }}!</h1>
             {% set product = obj[0].__get('GetProdById') %}
+            {% set product_img = obj[0].__get('ImgUrls') %}
+            {{ dump(product_img) }}
             {{ dump(product)}}
+            <h1>{{ product.name }}!</h1>
+
 
             This friendly message is coming from:
             <ul>
+
+                <li>ID: <a href="#">{{ product.id }}</a></li>
+                <li>Category ID: <a href="#"> {{ product.category_id }}</a></li>
+                <li>Цена:<a href="#"> {{ product.price }}</a></li>
+                <li>Количество: <a href="#"> {{ product.num }}</a></li>
+                <li></li>
                 <li>Your controller at <code><a href="{{ '/home/imag2/src/Controller/AddProductController.php'|file_link(0) }}">src/Controller/AddProductController.php</a></code></li>
                 <li>Your template at <code><a href="{{ '/home/imag2/templates/add_product/index.html.twig'|file_link(0) }}">templates/add_product/index.html.twig</a></code></li>
             </ul>
@@ -19,6 +28,13 @@
         <form method="get" action="/main" enctype="application/x-www-form-urlencoded | multipart/form-data | text/plain">
             <div class="links">
                 <div class="col">
+                    <div class="slick">
+                    {% for img in product_img %}
+                        {% if img.product_id == _get.id %}
+                            <img src="{{ img.url }}" alt="{{ img.name }}">
+                        {% endif %}
+                    {% endfor %}
+                    </div>
                 </div>
             </div>
         </form>

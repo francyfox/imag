@@ -119,7 +119,6 @@ class products
             $orig = '/orig';
             $urlhead = implode($orig, $urls);
             $urlspit = preg_split('/\s+/', $urlhead);
-            $this->ImgUrls = $urlspit;
 
             $type = [
                 'image/gif' => 'gif',
@@ -144,14 +143,16 @@ class products
                 $typeofimage = $head_type[$i];
 
                 $date = date('h:i:s');
-                $saveTo = './img/'. 'img__' . $header[$i]['Content-Length'] . '_' . '.'. $type[$typeofimage];
+                $foto_name = 'img__' . $header[$i]['Content-Length'];
+                $saveTo = './img/'. $foto_name . '_' . '.'. $type[$typeofimage];
                 $fp = fopen($saveTo, 'w+');
 
                 if($fp === false){
                     echo ('Could not open: ' . $saveTo);
                 }
 
-                $query ="INSERT INTO fotos VALUES ($p_id, '$saveTo')";
+
+                $query ="INSERT INTO fotos VALUES (0, $p_id , '$foto_name', '$saveTo')";
                 $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
 
                 $ch = curl_init();
@@ -170,7 +171,6 @@ class products
                 fflush($fp);
                 fclose($fp);
                 curl_close($ch);
-//                return true;
 
             }
         }
@@ -195,8 +195,11 @@ class products
             $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
             $p_id++;
 
-            $query2 = "SELECT * FROM products where id= '$product_id'";
-            $getFotoId = mysqli_query($mysqli, ) or die("Ошибка " . mysqli_error($mysqli));
+            $query2 = "SELECT id FROM products where name= '$p_name'";
+            $result2 = mysqli_query($mysqli, $query2);
+            $getFotoId = mysqli_fetch_assoc($result2);
+
+            $this->getImgUrls($getFotoId["id"]);
             products::reload('main');
         }
     }
@@ -239,6 +242,15 @@ class products
             return $product;
         }
 
+    }
+    public function img_list(){
+        $mysqli = $this->connect();
+        $query = "SELECT * FROM fotos";
+        $result = mysqli_query($mysqli, $query);
+
+        while ($row[] = mysqli_fetch_assoc($result)) {
+            $this->ImgUrls = $row;
+        }
     }
 
 

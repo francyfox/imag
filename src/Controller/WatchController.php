@@ -19,6 +19,7 @@ class WatchController extends AbstractController
 
         $id = (int)$_GET['id'];
         $obj[0]->getProductById($id);
+        $obj[0]->img_list();
         return $this->render('watch/index.html.twig', [
             'obj' => $obj,
             'controller_name' => 'Preview Product'
