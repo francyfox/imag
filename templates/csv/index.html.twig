@@ -1,20 +1,26 @@
-{% extends 'base.html.twig' %}
+{% include 'main/header.twig' %}
+<div class="wrap">
+    <div class="example-wrapper">
 
-{% block title %}Hello CsvController!{% endblock %}
-
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/imag2/src/Controller/CsvController.php'|file_link(0) }}">src/Controller/CsvController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/imag2/templates/csv/index.html.twig'|file_link(0) }}">templates/csv/index.html.twig</a></code></li>
-    </ul>
+        <div class="content">
+            <h1>Hello {{ controller_name }}!</h1>
+            This friendly message is coming from:
+            <ul>
+                <li>Your controller at <code><a href="{{ '/home/imag2/src/Controller/AddProductController.php'|file_link(0) }}">src/Controller/AddProductController.php</a></code></li>
+                <li>Your template at <code><a href="{{ '/home/imag2/templates/add_product/index.html.twig'|file_link(0) }}">templates/add_product/index.html.twig</a></code></li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <form method="get" action="/main" enctype="application/x-www-form-urlencoded | multipart/form-data | text/plain">
+            <input type="file" value="CHOOSE CSV">
+            <input type="submit" value="Import CSV">
+        </form>
+    </div>
+    <div class="content">
+        <div class="links">
+            <a href="/main">BACK TO MAIN</a>
+        </div>
+    </div>
 </div>
-{% endblock %}
+{% include 'main/bottom.twig' %}
