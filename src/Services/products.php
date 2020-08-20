@@ -204,6 +204,20 @@ class products
         }
     }
 
+    public function AddProductNew(string $p_name, string $p_category, int $p_num, int $p_price, array $img_urls) {
+        $mysqli = $this->connect();
+        $rep = new rep;
+
+        $rep->setProductName($p_name);
+        $rep->setCategoryName($p_category);
+        $rep->setProductNum($p_num);
+        $rep->setProductPrice($p_price);
+        $rep->setImgUrls($img_urls);
+
+        $query ="INSERT INTO products VALUES ($p_id, $c_id, '$p_category', '$p_name', $p_num, $p_price)";
+        $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
+    }
+
     public function update_product(){
 
         $mysqli = $this->connect();
