@@ -16,7 +16,7 @@ class csv
         $products = new products;
 
 
-        if($_FILES["file"]["size"] > 0){
+        if($_FILES){
             $filename=$_FILES["file"]["tmp_name"];
             $file = fopen($filename, "r");
             while (($getData = fgetcsv($file, 10000, ",")) !== FALSE){

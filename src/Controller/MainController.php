@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\NewProduct;
 use App\Services\db;
 use App\Services\products;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,9 +13,8 @@ class MainController extends AbstractController
     /**
      * @Route("/main", name="main")
      */
-    public function index(products $products, db $db)
+    public function index(products $products, NewProduct $newProduct)
     {
-        $connect = $db->connect();
         $items_list = $products->items_list();
         $cat_list = $products->cat_list();
         $products->delete_category();
@@ -22,6 +22,18 @@ class MainController extends AbstractController
         $products->add_product();
         $products->add_category();
         $products->update_product();
+
+        $add = new $newProduct;
+        $add
+            ->add_id(1)
+            ->add_cID(1)
+            ->add_category('TEST')
+            ->add_name('TEST')
+            ->AddNewProduct();
+        var_dump($add);
+
+
+
         return $this->render('main/index.twig', [
             'env_name' => getenv("USER"),
             'controller_name' => 'MainController',

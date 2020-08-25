@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Services\products;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +21,7 @@ class CsvController extends AbstractController
      */
 
 
-    public function index(csv $csv)
+    public function index(csv $csv, products $products)
     {
         $request = new Request(
             $_GET,
@@ -35,6 +36,11 @@ class CsvController extends AbstractController
 
 
         $csv->GetCsV();
+
+        $imgs = [
+            '0' => 'https://avatars.mds.yandex.net/get-mpic/1767083/img_id538587603382211246.jpeg/orig'
+        ];
+        $products->AddProductNew('test', 'cat_test', 3, 200, $imgs);
 
         return $this->render('csv/index.html.twig', [
             'controller_name' => 'CsvController',

@@ -7,6 +7,7 @@ use App\Repository\product_rep as rep;
 use App\Services\db as db;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
+
 class products
 {
 
@@ -22,18 +23,14 @@ class products
         return $this->$property;
     }
 
-    public function connect(){
-        $db = new db;
-        return $db->connect();
-    }
-
     public function reload(string $url){
         header( "Location: http://127.0.0.1:8000/$url" );
         die;
     }
 
     public function items_list(){
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
         $query = "SELECT * FROM products";
         $result = mysqli_query($mysqli, $query);
 
@@ -46,7 +43,8 @@ class products
     }
 
     public function cat_list(){
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
         $query = "SELECT * FROM category";
         $result = mysqli_query($mysqli, $query);
 
@@ -59,8 +57,8 @@ class products
     }
 
     public function delete_product(){
-
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         if(isset($_GET['prod_id']))
         {
@@ -72,8 +70,8 @@ class products
     }
 
     public function delete_category(){
-
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         if(isset($_GET['cat_id']))
         {
@@ -86,8 +84,8 @@ class products
 
 
     public function add_category(){
-
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         if(isset($_GET['add_cat']))
         {
@@ -101,9 +99,9 @@ class products
         }
     }
 
-    public function getImgUrls($p_id){
-
-        $mysqli = $this->connect();
+    public function getImgUrls($p_id, $urls){
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         if(isset($_GET['imgurls'])) {
 
@@ -113,8 +111,6 @@ class products
             if (!file_exists($path)) {
                 mkdir($path, 0700);
             }
-
-            $urls = explode('/orig', $_GET['imgurls']);
 
             $orig = '/orig';
             $urlhead = implode($orig, $urls);
@@ -178,8 +174,8 @@ class products
     }
 
     public function add_product(){
-
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         if(isset($_GET['add']))
         {
@@ -199,28 +195,16 @@ class products
             $result2 = mysqli_query($mysqli, $query2);
             $getFotoId = mysqli_fetch_assoc($result2);
 
-            $this->getImgUrls($getFotoId["id"]);
+            $urls = explode('/orig', $_GET['imgurls']);
+            $this->getImgUrls($getFotoId["id"], $urls);
             products::reload('main');
         }
     }
 
-    public function AddProductNew(string $p_name, string $p_category, int $p_num, int $p_price, array $img_urls) {
-        $mysqli = $this->connect();
-        $rep = new rep;
-
-        $rep->setProductName($p_name);
-        $rep->setCategoryName($p_category);
-        $rep->setProductNum($p_num);
-        $rep->setProductPrice($p_price);
-        $rep->setImgUrls($img_urls);
-
-        $query ="INSERT INTO products VALUES ($p_id, $c_id, '$p_category', '$p_name', $p_num, $p_price)";
-        $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
-    }
 
     public function update_product(){
-
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         if(isset($_GET['update']))
         {
@@ -238,8 +222,8 @@ class products
     }
 
     public function getProductById(int $product_id) : array {
-
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
 
         $query = "SELECT * FROM products where id= '$product_id'";
         $result = mysqli_query($mysqli, $query) or die(mysqli_error());
@@ -258,7 +242,8 @@ class products
 
     }
     public function img_list(){
-        $mysqli = $this->connect();
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
         $query = "SELECT * FROM fotos";
         $result = mysqli_query($mysqli, $query);
 
