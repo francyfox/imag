@@ -21,4 +21,15 @@ class product_rep
 
        return $newProduct->AddNewProduct();
    }
+
+    function sortArrayByArray(array $array, array $orderArray) : array {
+        $ordered = array();
+        foreach ($orderArray as $key) {
+            if (array_key_exists($key, $array)) {
+                $ordered[$key] = $array[$key];
+                unset($array[$key]);
+            }
+        }
+        return $ordered + $array;
+    }
 }

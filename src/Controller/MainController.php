@@ -23,14 +23,14 @@ class MainController extends AbstractController
         $products->add_category();
         $products->update_product();
 
-        $add = new $newProduct;
-        $add
-            ->add_id(1)
-            ->add_cID(1)
-            ->add_category('TEST')
-            ->add_name('TEST')
-            ->AddNewProduct();
-        var_dump($add);
+//        $add = new $newProduct;
+//        $add
+//            ->add_category('TEST')
+//            ->add_name('TEST')
+//            ->add_price(100)
+//            ->add_num(5)
+//            ->AddNewProduct();
+//        var_dump($add);
 
 
 
