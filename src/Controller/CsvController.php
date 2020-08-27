@@ -34,13 +34,7 @@ class CsvController extends AbstractController
 
         $isfile = $request->files;
 
-
         $csv->GetCsV();
-
-        $imgs = [
-            '0' => 'https://avatars.mds.yandex.net/get-mpic/1767083/img_id538587603382211246.jpeg/orig'
-        ];
-        $products->AddProductNew('test', 'cat_test', 3, 200, $imgs);
 
         return $this->render('csv/index.html.twig', [
             'controller_name' => 'CsvController',

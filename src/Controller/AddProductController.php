@@ -12,9 +12,8 @@ class AddProductController extends AbstractController
     /**
      * @Route("/add/product", name="add_product")
      */
-    public function index(products $products, db $db)
+    public function index(products $products)
     {
-        $connect = $db->connect();
         $cat_list = $products->cat_list();
         return $this->render('add_product/index.html.twig', [
             'controller_name' => 'AddProductController',

@@ -11,10 +11,12 @@ interface Product {
     public function add_id(int $id) : Product;
     public function add_category(string $category) : Product;
     public function add_cID(int $c_id) : Product;
+    public function findSet_cID() : Product;
     public function add_name(string $name) : Product;
     public function add_num(int $num) : Product;
     public function add_price(float $price) : Product;
-    public function add_img_urls(array $img_urls) : Product;
+    public function add_img_urls(string $img_urls) : Product;
+    public function update(string $url) : Product;
     public function AddNewProduct() : Product;
 }
 
@@ -29,13 +31,11 @@ class NewProduct implements Product
 
     public function add_id(int $id): Product
     {
-
         $this->get->id = $id;
         return $this;
     }
     public function add_category(string $category): Product
     {
-        $this->reset();
         $this->get->category = $category;
         return $this;
     }
@@ -44,8 +44,36 @@ class NewProduct implements Product
         $this->get->c_id = $c_id;
         return $this;
     }
+    public function findSet_cID(): Product
+    {
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
+
+        $category = $this->get->category;
+        $query = "SELECT category_id FROM category where category= '$category'";
+        $result = mysqli_query($mysqli, $query);
+        $fetch = mysqli_fetch_assoc($result);
+
+        if ($fetch != false){
+            $get_cID = (int)$fetch["category_id"];
+            $this->add_cID($get_cID);
+        }else{
+
+            $query ="INSERT INTO category VALUES (0, '$category')";
+            $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
+
+            $query = "SELECT category_id FROM category where category= '$category'";
+            $result = mysqli_query($mysqli, $query) or die("Не могу узнать ID категории " . mysqli_error($mysqli) . var_dump($query));
+
+            $get_cID = mysqli_fetch_assoc($result);
+            $this->add_cID((int)$get_cID["category_id"]);
+        }
+
+        return $this;
+    }
     public function add_name(string $name): Product
     {
+        $this->reset();
         $this->get->name = $name;
         return $this;
     }
@@ -59,16 +87,24 @@ class NewProduct implements Product
         $this->get->price = $price;
         return $this;
     }
-    public function add_img_urls(array $img_urls): Product
+    public function add_img_urls(string $img_urls): Product
     {
         $this->get->img_urls = $img_urls;
         return $this;
     }
+
+    public function update(string $url): Product{
+        products::reload($url);
+        return $this;
+    }
+
     public function AddNewProduct(): Product
     {
+        $instance = db::getInstance();
+        $mysqli = $instance->getConnection();
+
         $get = $this
-                ->add_id(0)
-                ->add_cID(0);
+                ->add_id(0);
 
         $array = (array)$get->get;
         $properties = array('id', 'c_id', 'category', 'name', 'num', 'price');
@@ -80,29 +116,25 @@ class NewProduct implements Product
                 $array_sort[$key] = "'" .$val . "'";
             }
         }
+        $get_urls = $array_sort['img_urls'];
+
+        unset($array_sort['img_urls']);
+
         $string = implode(',', $array_sort);
 
-
-        $instance = db::getInstance();
-        $mysqli = $instance->getConnection();
-
         $query ="INSERT INTO products VALUES ($string)";
-        var_dump($query);
-        $result = mysqli_query($mysqli, $query) or die("Ошибка 1 - " . mysqli_error($mysqli));
+        $result = mysqli_query($mysqli, $query) or die("Не могу добавить продукт - " . mysqli_error($mysqli) . var_dump($query));
 
+        $name = $array_sort['name'];
+        $query = "SELECT id FROM products where name=$name";
+        $result = mysqli_query($mysqli, $query) or die("Не могу получить ID - " . mysqli_error($mysqli)). var_dump($query);
+        $getFotoId = mysqli_fetch_assoc($result);
 
+        $urls = explode('/orig', $get_urls);
+        $p_id =(int)$getFotoId["id"];
 
-//        if ($array_sort['img_urls'] != ""){
-//            $name = $array_sort['name'];
-//            $query = "SELECT id FROM products where name=$name";
-//            $result = mysqli_query($mysqli, $query) or die("Ошибка 2 - " . mysqli_error($mysqli));;
-//            $getFotoId = mysqli_fetch_assoc($result);
-//
-//            $get_urls = $array_sort['img_urls'];
-//            $urls = explode('/orig', $_GET['imgurls']);
-//            products::getImgUrls($getFotoId["id"], $urls);
-//        }
-
+        $products = new products();
+        $products->getImgUrls($p_id, $urls);
 
         return $get;
     }

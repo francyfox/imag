@@ -103,7 +103,7 @@ class products
         $instance = db::getInstance();
         $mysqli = $instance->getConnection();
 
-        if(isset($_GET['imgurls'])) {
+        if(isset($urls)) {
 
             $project_path = getenv('OLDPWD');
             $path = "$project_path/public/img";
@@ -116,6 +116,7 @@ class products
             $urlhead = implode($orig, $urls);
             $urlspit = preg_split('/\s+/', $urlhead);
 
+
             $type = [
                 'image/gif' => 'gif',
                 'image/jpeg' => 'jpeg',
@@ -126,6 +127,7 @@ class products
             ];
 
             for($i=0; $i < count($urls) - 1; $i++){
+                $urlspit[$i] = str_replace("'", '', $urlspit[$i]);
                 if (get_headers($urlspit[$i]) != null){
                     $header[$i] = get_headers($urlspit[$i], 1);
                 }
@@ -236,6 +238,7 @@ class products
             $product = [];
             while ($row = mysqli_fetch_assoc($result)) {
                 $this->GetProdById = $row;
+                var_dump($row);
             }
             return $product;
         }

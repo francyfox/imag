@@ -165,6 +165,7 @@ textarea {
 }
 .table li:nth-child(3) {
   min-width: 120px;
+  max-width: 120px;
 }
 .table li:nth-child(4) {
   min-width: 140px;
@@ -237,6 +238,10 @@ textarea {
 .folders li {
   display: flex;
   justify-content: space-between;
+}
+.folders li a {
+  max-width: 65%;
+  word-break: break-all;
 }
 #pagination-container {
   margin-top: 10px;
