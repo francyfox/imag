@@ -1,14 +1,15 @@
 <?php
 
-// app/src/Service/ContainerParametersHelper.php
+// app/src/Service/Helper.php
 
 namespace App\Services;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class ContainerParametersHelper {
+class Helper{
 
     private $params;
+    private $em;
 
     public function __construct(ParameterBagInterface $params)
     {
@@ -16,7 +17,6 @@ class ContainerParametersHelper {
     }
 
     /**
-     * This method returns the root directory of your Symfony 4 project.
      *
      * e.g "/var/www/vhosts/myapplication"
      *
@@ -25,6 +25,7 @@ class ContainerParametersHelper {
     public function getApplicationRootDir(){
         return $this->params->get('kernel.project_dir');
     }
+
 
     /**
      * This method returns the value of the defined parameter.

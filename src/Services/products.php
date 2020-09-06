@@ -34,12 +34,15 @@ class products
         $query = "SELECT * FROM products";
         $result = mysqli_query($mysqli, $query);
 
-        $products = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $products[] = $row;
+        if($result  == false){
+            echo 'Table products is empty' . $result;
+        }else{
+            $products = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $products[] = $row;
+            }
+            return $products;
         }
-
-        return $products;
     }
 
     public function cat_list(){
@@ -48,12 +51,17 @@ class products
         $query = "SELECT * FROM category";
         $result = mysqli_query($mysqli, $query);
 
-        $category = [];
-        while ($row = mysqli_fetch_assoc($result)) {
-            $category[] = $row;
+        if($result  == false){
+            echo ' || Table category is empty' . $result;
+        }else{
+            $category = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $category[] = $row;
+            }
+
+            return $category;
         }
 
-        return $category;
     }
 
     public function delete_product(){

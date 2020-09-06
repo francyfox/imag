@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: local('Rowdies Light'), local('Rowdies-Light'), url(https://fonts.gstatic.com/s/rowdies/v1/ptRMTieMYPNBAK219hth5O4.ttf) format('truetype');
+  src: local('Rowdies Light'), local('Rowdies-Light'), url(https://fonts.gstatic.com/s/rowdies/v2/ptRMTieMYPNBAK219hth5O4.ttf) format('truetype');
 }
 @-webkit-keyframes fade-in {
   0% {
@@ -277,5 +277,16 @@ textarea {
 .slick {
   width: 500px;
   margin: 25px;
+}
+.error {
+  margin: 10px;
+  padding: 20px;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  background: #894848;
+  box-shadow: 5px 5px 6px 0px #000000a6;
+  border: 1px solid rosybrown;
 }
 /*# sourceMappingURL=main.css.map */

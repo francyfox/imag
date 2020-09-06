@@ -1,6 +1,5 @@
 $(function() {
     try {
-        console.log('READY STADY GO');
         $('.delete').click(function(e) {
             console.log($(this));
             let $id = $(this).attr('itemid');
