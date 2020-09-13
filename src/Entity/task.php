@@ -9,8 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Class task
  * @package App/Entity
  * @ORM\Table(name="task")
- * @ORM\Entity(repositoryClass="App\Entity\task")
+ * @ORM\Entity
  */
+
 class task
 {
 

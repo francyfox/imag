@@ -13,6 +13,25 @@
     </div>
     <div class="content">
 
+        <form class="table _task" method="get" action="/main">
+
+                {% for task in obj %}
+                <ul>
+                    <li>{{ task.id }}</li>
+                    <li>{{ task.name }}</li>
+                    <li>{{ task.params }}</li>
+                    <li>{{ task.state }}</li>
+                    <li>{{ task.dateCreate|date('Y-m-d H:i:s') }}</li>
+                    <li>{{ task.dateDone|date('Y-m-d H:i:s') }}</li>
+                    <li><a class="ico" href="{{ app.request.uri }}/{{ task.id }}/run"><i class="fas fa-play"></i></a></li>
+                    <li><a class="ico" href="{{ app.request.uri }}/{{ task.id }}/delete"><i class="fas fa-trash-alt"></i></a></li>
+                </ul>
+                {% endfor %}
+
+        </form>
+
+
+
     </div>
     <div class="content">
         <div class="links">

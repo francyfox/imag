@@ -31,32 +31,38 @@ class csv extends SetState
 
     public function movecsv() : array
     {
-        if($_FILES['file']['type'] == 'text/csv') {
-            $target_dir = $this->RootDir . '/public/csv/';
-            $file = $_FILES['file']['name'];
-            $path = pathinfo($file);
-            $filename = $path['filename'];
-            $ext = $path['extension'];
-            $temp_name = $_FILES['file']['tmp_name'];
-            $this->file_path = $target_dir.$filename.".".$ext;
+        var_dump(parent::getState());
+        if(isset($_FILES))
+        {
+            if($_FILES) //['file']['type'] == 'text/csv'
+            {
+                $target_dir = $this->RootDir . '/public/csv/';
+                $file = $_FILES['file']['name'];
+                $path = pathinfo($file);
+                $filename = $path['filename'];
+                $ext = $path['extension'];
+                $temp_name = $_FILES['file']['tmp_name'];
+                $this->file_path = $target_dir.$filename.".".$ext;
 
-            if (file_exists($this->file_path)) {
-                parent::setError("Sorry, file already exists.");
+                if (file_exists($this->file_path)) {
+                    parent::setError("Sorry, file already exists.");
+                }else{
+
+                    $result = move_uploaded_file($temp_name,$this->file_path);
+                    parent::wait();
+                }
+
+                return [
+                    $filename => $this->file_path
+                ];
+
             }else{
-
-                $result = move_uploaded_file($temp_name,$this->file_path);
-                parent::wait();
+                parent::broken();
+                parent::setError('Cant import CSV || $_FILES empty');
+                return ['none'=>false];
             }
-
-            return [
-                $filename => $this->file_path
-            ];
-
-        }else{
-            parent::broken();
-            parent::setError('Cant import CSV || $_FILES empty');
-            return ['none'=>false];
         }
+
     }
 
 

@@ -5,9 +5,14 @@ namespace App\Services\tasks;
 
 interface task
 {
-    public function get(int $id): void;
+    public function setState($status);
+    public function getState() : string;
+    public function accept() : void;
+    public function wait() : void;
+    public function rejected() : void;
+    public function done() : void;
+    public function broken() : void;
 
-    public function setState(int $id, $status);
 }
 
 class SetState
@@ -19,6 +24,14 @@ class SetState
     protected const REJECTED = 3;
     protected const BROKEN = 4;
     protected $error;
+
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
 
     /**
      * @return mixed
@@ -37,15 +50,9 @@ class SetState
         echo '<div class="error">' . $this->error . '</div>';
     }
 
-
-    public function get(int $id): void
+    public function setState($status)
     {
-        // TODO: Implement get() method.
-    }
-
-    public function setState(int $id, $status)
-    {
-        // TODO: Implement setStatus() method.
+        $this->state = $status;
     }
 
     public function wait(): void
