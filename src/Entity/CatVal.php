@@ -5,7 +5,6 @@ namespace DocRep;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * Class CatVal
  * @package App/Entity

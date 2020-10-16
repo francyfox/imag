@@ -5,7 +5,6 @@ namespace App\Services;
 
 
 use App\Kernel;
-use http\Env\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Request;
 use App\Services\db;
@@ -24,17 +23,17 @@ class csv extends SetState
 {
     private $RootDir;
     private $file_path;
+    private $isCSV;
 
     public function __construct(Helper $helper){
         $this->RootDir = $helper->getApplicationRootDir();
     }
 
-    public function movecsv() : array
+    public function movecsv()
     {
-        var_dump(parent::getState());
-        if(isset($_FILES))
+        if(isset($_FILES['file']))
         {
-            if($_FILES) //['file']['type'] == 'text/csv'
+            if($_FILES['file']['type'] == 'text/csv') //
             {
                 $target_dir = $this->RootDir . '/public/csv/';
                 $file = $_FILES['file']['name'];
@@ -47,9 +46,7 @@ class csv extends SetState
                 if (file_exists($this->file_path)) {
                     parent::setError("Sorry, file already exists.");
                 }else{
-
                     $result = move_uploaded_file($temp_name,$this->file_path);
-                    parent::wait();
                 }
 
                 return [
@@ -57,22 +54,23 @@ class csv extends SetState
                 ];
 
             }else{
-                parent::broken();
                 parent::setError('Cant import CSV || $_FILES empty');
                 return ['none'=>false];
             }
+        }else{
+            return ['none'=>false];
         }
 
     }
 
 
-    public function SetCsv() : void{
+    public function SetCsv(string $path) : void{
 
         $instance = db::getInstance();
         $mysqli = $instance->getConnection();
+        $filename = $path;
 
-        $filename = $this->file_path;
-
+        xdebug_var_dump($path);
         if(isset($filename)){
             $file = fopen($filename, "r");
             $add = new newProduct;
@@ -88,7 +86,6 @@ class csv extends SetState
                     ->AddNewProduct();
             }
             fclose($file);
-            parent::done();
         }
     }
 }

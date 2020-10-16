@@ -8,11 +8,10 @@ use App\Services\csv;
 
 class TaskMngr extends SetState
 {
-    public function import() : string{
-
-    }
-    public function addTask(){
-        $csv = new csv();
+    #TODO: https://sentry.io/for/symfony/;
+    #TODO: https://ru.nuxtjs.org/;
+    public function import()
+    {
 
     }
 

@@ -5,7 +5,6 @@ namespace DocRep;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
-
  * Class task
  * @package App/Entity
  * @ORM\Table(name="task")
@@ -14,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 class task
 {
-
     /**
      * @var int
      * @ORM\Id
@@ -30,7 +28,7 @@ class task
      * @var string
      * @ORM\Column(type="string")
      */
-    private $params;
+    public $params;
     /** @ORM\Column(type="string", columnDefinition="ENUM('WAIT', 'ACCEPTED', 'DONE', 'REJECTED', 'BROKEN')") */
     private $state;
     /** @ORM\Column(type="datetime") */

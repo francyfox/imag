@@ -3,17 +3,19 @@
 namespace App\Controller;
 
 use App\Services\NewProduct;
-use App\Services\db;
 use App\Services\products;
+use DocRep\Agent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class MainController extends AbstractController
 {
     /**
      * @Route("/main", name="main")
      */
+
     public function index(products $products, NewProduct $newProduct)
     {
         $request = new Request(
@@ -24,6 +26,7 @@ class MainController extends AbstractController
             $_FILES,
             $_SERVER
         );
+
 
         $items_list = $products->items_list();
         $cat_list = $products->cat_list();

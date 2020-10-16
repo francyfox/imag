@@ -28,59 +28,18 @@ class FotoVal
      * @var int
      * @ORM\Column(type="integer")
      */
+    private $p_id;
 
-    private $product_id;
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $filename;
 
     /**
-     * @return int
+     * @var string
+     * @ORM\Column(type="string", length=255)
      */
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    private $path;
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return int
-     */
-    public function getProductId(): int
-    {
-        return $this->product_id;
-    }
-
-    /**
-     * @param int $product_id
-     */
-    public function setProductId(int $product_id): void
-    {
-        $this->product_id = $product_id;
-    }
 }

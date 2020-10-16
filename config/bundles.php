@@ -13,4 +13,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     MyBuilder\Bundle\CronosBundle\MyBuilderCronosBundle::class => ['all' => true],
+    Sentry\SentryBundle\SentryBundle::class => ['all' => true],
 ];

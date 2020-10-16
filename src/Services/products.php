@@ -6,6 +6,7 @@ namespace App\Services;
 use App\Repository\product_rep as rep;
 use App\Services\db as db;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use App\Services\Helper;
 
 
 class products
@@ -112,9 +113,8 @@ class products
         $mysqli = $instance->getConnection();
 
         if(isset($urls)) {
-
-            $project_path = getenv('OLDPWD');
-            $path = "$project_path/public/img";
+            $project_path = '/home/imag2'; // TODO: CHANGE PATH
+            $path = "$project_path/public/img/";
 
             if (!file_exists($path)) {
                 mkdir($path, 0700);
@@ -123,6 +123,7 @@ class products
             $orig = '/orig';
             $urlhead = implode($orig, $urls);
             $urlspit = preg_split('/\s+/', $urlhead);
+            $header = [];
 
 
             $type = [
@@ -136,8 +137,8 @@ class products
 
             for($i=0; $i < count($urls) - 1; $i++){
                 $urlspit[$i] = str_replace("'", '', $urlspit[$i]);
-                if (get_headers($urlspit[$i]) != null){
-                    $header[$i] = get_headers($urlspit[$i], 1);
+                if (@get_headers($urlspit[$i]) != null){
+                    $header[$i] = @get_headers($urlspit[$i], 1);
                 }
 
                 if ($header[$i]['Content-Type'] != null){
@@ -150,7 +151,7 @@ class products
 
                 $date = date('h:i:s');
                 $foto_name = 'img__' . $header[$i]['Content-Length'];
-                $saveTo = './img/'. $foto_name . '_' . '.'. $type[$typeofimage];
+                $saveTo = $path . $foto_name . '_' . '.'. $type[$typeofimage];
                 $fp = fopen($saveTo, 'w+');
 
                 if($fp === false){
@@ -159,7 +160,10 @@ class products
 
 
                 $query ="INSERT INTO fotos VALUES (0, $p_id , '$foto_name', '$saveTo')";
+                var_dump($query);
+
                 $result = mysqli_query($mysqli, $query) or die("Ошибка " . mysqli_error($mysqli));
+
 
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11');

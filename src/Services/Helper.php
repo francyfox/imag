@@ -9,11 +9,13 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 class Helper{
 
     private $params;
+    private static $RootPath;
     private $em;
 
     public function __construct(ParameterBagInterface $params)
     {
         $this->params = $params;
+        self::$RootPath = $params;
     }
 
     /**
@@ -26,6 +28,9 @@ class Helper{
         return $this->params->get('kernel.project_dir');
     }
 
+    public static function _getApplicationRootDir(){
+        return self::$RootPath->get('kernel.project_dir');;
+    }
 
     /**
      * This method returns the value of the defined parameter.

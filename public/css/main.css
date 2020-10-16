@@ -310,4 +310,9 @@ textarea {
   height: 30px;
   background: #000;
 }
+.xdebug-var-dump {
+  padding: 12px;
+  background-color: #222;
+  font: 16px 'Rowdies', cursive;
+}
 /*# sourceMappingURL=main.css.map */

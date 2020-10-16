@@ -5,8 +5,7 @@
         <div class="content">
             {% set product = obj[0].__get('GetProdById') %}
             {% set product_img = obj[0].__get('ImgUrls') %}
-            {{ dump(product_img) }}
-            {{ dump(product)}}
+            {{ dump(_get.id) }}
             <h1>{{ product.name }}!</h1>
 
 
@@ -29,11 +28,11 @@
             <div class="links">
                 <div class="col">
                     <div class="slick">
-                    {% for img in product_img %}
-                        {% if img.product_id == _get.id %}
-                            <img src="{{ img.url }}" alt="{{ img.name }}">
-                        {% endif %}
-                    {% endfor %}
+                        {% for img in product_img %}
+                            {% if img.p_id == _get.id %}
+                                <img data-id="{{ img.p_id }}" src="{{ img.path|replace({'/home/imag2/public':''}) }}" alt="{{ img.filename }}">
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
