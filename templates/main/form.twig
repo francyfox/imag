@@ -1,6 +1,7 @@
 <div class="wrap">
     <div class="content">
         <h1>Hello {{ controller_name }}!</h1>
+        {{ dump(app.user) }}
 
         This friendly message is coming from:
         <ul>
@@ -20,7 +21,7 @@
                         <div class="text">
 
                             <div class="img"></div>
-                            <h3>Bonjour {% if env_name %} <span class="not_auth">{{ env_name }}</span>{% endif %}</h3>
+                            <h3>Bonjour <span class="not_auth"></span></h3>
                             <input type="text" placeholder="USERNAME">
                             <input type="password" placeholder="PASSWORD">
                             <input type="submit" value="LOGIN">

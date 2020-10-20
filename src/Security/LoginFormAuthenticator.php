@@ -22,7 +22,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login';
+    public const LOGIN_ROUTE = 'login';
 
     private $urlGenerator;
     private $csrfTokenManager;
@@ -65,14 +65,26 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator implements P
 
         // Load / create our user however you need.
         // You can do this by calling the user provider, or with custom logic here.
-        $user = $userProvider->loadUserByUsername($credentials['email']);
+
+        try {
+            $user = $userProvider->loadUserByUsername($credentials['email']);
+
+            if (!$user instanceof UserInterface)
+            {
+                throw new AuthenticationServiceException('The user provider must return a UserInterface object.');
+            }
+
+            return $user;
+        } catch (UsernameNotFoundException $e) {
+            $e->setUsername($credentials['email']);
+
+            throw $e;
+        }
 
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
-
-        return $user;
     }
 
     public function checkCredentials($credentials, UserInterface $user)

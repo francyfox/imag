@@ -42,3 +42,8 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'DocRep'
                 alias: FotoVal
+            Agent:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'DocRep'

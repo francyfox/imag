@@ -17,11 +17,14 @@ class Registration
 
     protected $plain;
 
+    protected $roles;
+
 
     public function setUser(Agent $user)
     {
         $this->user = $user;
         $this->plain = $user->getPassword();
+        $user->setRoles(['ROLE_USER']);
     }
 
     public function getUser()

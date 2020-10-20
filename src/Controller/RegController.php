@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use DocRep\Agent;
+use DocRep\Agent as User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Services\Auth\Registration;
@@ -19,7 +19,7 @@ class RegController extends AbstractController
 
     public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
-        $agent = new Agent();
+        $agent = new User();
         $user = new Registration();
         $em = $this->getDoctrine()->getManager();
         $form = $this->createForm(RegistrationType::class, $user);

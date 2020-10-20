@@ -3,7 +3,7 @@
 
 namespace App\Services;
 
-use DocRep\Agent;
+use DocRep\Agent as agent;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -26,7 +26,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Agent::class,
+            'data_class' => agent::class,
         ]);
     }
 }

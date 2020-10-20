@@ -10,8 +10,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity(repositoryClass=AgentRepository::class)
  */
 
+$trace = debug_backtrace();
+$caller = $trace[1];
+echo "Called by {$caller['function']}";
+if (isset($caller['class'])) echo " in {$caller['class']}";
 
-class Agent implements UserInterface, \Serializable
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
